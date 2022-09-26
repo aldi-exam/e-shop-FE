@@ -45,7 +45,7 @@ export default {
       state: CartState,
       newCart: CartState
     ): void {
-      state.products = newCart.products;
+      state.products = { ...newCart.products };
     },
   },
   actions: {

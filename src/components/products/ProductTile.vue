@@ -6,8 +6,8 @@
       class="product-tile__cart-icon"
       type="success"
     >
-      <CartIcon :size="30"
-    /></NBadge>
+      <CartIcon :size="30" />
+    </NBadge>
     <h1>{{ product.name }}</h1>
     <h4>{{ `${product.price}$ each` }}</h4>
     <img
@@ -40,10 +40,10 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const store = useStore();
-    const amountInCart = computed(() =>
-      store.getters["cart/amount"](props.product._id)
-    );
+    const { state } = useStore();
+    const amountInCart = computed(() => {
+      return state.cart?.products[props.product._id]?.amount;
+    });
 
     return { amountInCart };
   },
@@ -54,6 +54,7 @@ export default defineComponent({
 h1 {
   margin: 0;
 }
+
 .product-tile {
   width: 15rem;
   height: 20rem;

@@ -4,20 +4,10 @@ import { sleep } from "./helper";
 
 const cartId = "62863b1f9c1bcb9946a0c8a8";
 
-const getDbCart = () => {
-  return db.carts.find((cart) => cart._id === cartId);
-};
-
-const updateDbCart = (cart: CartInterface) => {
-  const index = db.carts.findIndex((cart) => cart._id === cartId);
-  if (index >= 0) db.carts[index] = cart;
-  else throw new Error("Cart not found");
-};
-
 export const getCart = async (): Promise<CartState> => {
   try {
     await sleep();
-    const cart = db.carts.find((cart) => cart._id === cartId);
+    const cart = db.getCart(cartId);
 
     if (!cart) {
       throw new Error("cart not found");
@@ -70,8 +60,7 @@ export const updateCart = async (payload: {
         })
       );
     }
-    updateDbCart(cart);
-
+    db.updateCart(cart);
     return cart;
   } catch (error) {
     console.log(error);
@@ -88,7 +77,7 @@ export const removeProduct = async (id: string): Promise<CartState | void> => {
 
     delete cart.products[id];
 
-    updateDbCart(cart);
+    db.updateCart(cart);
     return cart;
   } catch (error) {
     console.log(error);
@@ -99,12 +88,12 @@ export const removeProduct = async (id: string): Promise<CartState | void> => {
 export const clearCart = async (): Promise<CartState | void> => {
   try {
     await sleep();
-    const cart = getDbCart();
+    const cart = db.getCart(cartId);
     if (!cart) throw new Error("User has no cart");
 
     cart.products = {};
 
-    await updateDbCart(cart);
+    await db.updateCart(cart);
 
     return cart;
   } catch (error) {

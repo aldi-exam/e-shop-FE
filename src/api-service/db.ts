@@ -27,12 +27,27 @@ export interface UserInterface extends DataBaseDocument {
 }
 
 interface DataBaseInterface {
+  getCart: (cartId: string) => CartInterface | undefined;
+  updateCart: (newCart: CartInterface) => void;
   carts: Array<CartInterface>;
   products: Array<ProductInterface>;
   users: Array<UserInterface>;
 }
 
 const db: DataBaseInterface = {
+  getCart(cartId: string) {
+    return (this as DataBaseInterface).carts.find(
+      (cart: CartInterface) => cart._id === cartId
+    );
+  },
+  updateCart(newCart: CartInterface) {
+    const index = (this as DataBaseInterface).carts.findIndex(
+      (cart) => cart._id === newCart._id
+    );
+    if (index >= 0) (this as DataBaseInterface).carts[index] = newCart;
+    else throw new Error("Cart not found");
+  },
+
   carts: [
     {
       _id: "62863b1f9c1bcb9946a0c8a8",
