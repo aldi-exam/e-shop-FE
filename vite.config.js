@@ -12,6 +12,6 @@ export default ({ mode }) => {
         "@": path.resolve(__dirname, "./src"),
       },
     },
-    base: "/e-shop-FE/",
+    // base: "/e-shop-FE/",
   });
 };
