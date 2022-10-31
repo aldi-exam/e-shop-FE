@@ -2,3 +2,5 @@ node_modules
 dist
 .vscode
 src/api-service/db.ts
+.env
+.env.production
