@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "setup": "npm install && npm run env-setup",
-    "env-setup": "(cpy --no-overwrite .env.template ./ --rename=.env || : ) && (cpy --no-overwrite ./initial-db.ts ./src/api-service/ --rename=db.ts || :)",
+    "env-setup": "(cpy --no-overwrite .env.template.production ./ --rename=.env.production || : ) && (cpy --no-overwrite ./initial-db.ts ./src/api-service/ --rename=db.ts || :)",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
